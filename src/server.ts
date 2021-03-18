@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { createServer } from "http";
-import { Server, Socket } from "socket.io";
+import { Socket } from "socket.io";
 import './database/connection';
 import routes from './routes/index';
 

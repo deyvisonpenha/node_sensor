@@ -61,7 +61,26 @@ deviceRouter.patch('/:device_id', async (request, response) => {
     );
     const updateDevice = await deviceRepository.findOne({id: Number(device_id)})
     
-    io.emit('device')
+    return response.status(201).json(updateDevice);
+
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
+deviceRouter.put('/:device_id', async (request, response) => {
+  const {device_id} = request.params;
+  const {status} = request.body;
+  const deviceRepository = getRepository(Device);
+
+  try {
+    await deviceRepository.update(
+      { id: Number(device_id) },
+      {  status }
+    );
+    const updateDevice = await deviceRepository.findOne({id: Number(device_id)})
+    
+    io.emit('device', updateDevice)
     
     return response.status(201).json(updateDevice);
 
